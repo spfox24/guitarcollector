@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Guitar, Case
+
+from .forms import PracticeForm
 
 def home(request):
     return render(request, 'home.html')
@@ -14,7 +16,16 @@ def guitars_index(request):
 
 def guitars_detail(request, guitar_id):
     guitar = Guitar.objects.get(id=guitar_id)
-    return render(request, 'guitars/detail.html', { 'guitar': guitar })
+    practice_form = PracticeForm()
+    return render(request, 'guitars/detail.html', { 'guitar': guitar, 'practice_form': practice_form })
+
+def add_practice(request, guitar_id):
+    form = PracticeForm(request.POST)
+    if form.is_valid():
+        new_practice = form.save(commit=False)
+        new_practice.guitar_id = guitar_id
+        new_practice.save()
+    return redirect('guitars_detail', guitar_id=guitar_id)
 
 class GuitarCreate(CreateView):
     model = Guitar
