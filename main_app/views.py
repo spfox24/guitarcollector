@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Guitar
+from .models import Guitar, Case
 
 def home(request):
     return render(request, 'home.html')
@@ -27,5 +27,27 @@ class GuitarUpdate(UpdateView):
 class GuitarDelete(DeleteView):
     model = Guitar
     success_url = '/guitars/'
+
+def cases_index(request):
+    cases = Case.objects.all()
+    return render(request, 'cases/index.html', { 'cases': cases })
+
+def cases_detail(request, case_id):
+    case = Case.objects.get(id=case_id)
+    return render(request, 'cases/detail.html', { 'case': case })
+
+class CaseCreate(CreateView):
+    model = Case
+    fields = '__all__'
+
+class CaseUpdate(UpdateView):
+    model = Case
+    fields = '__all__'
+
+class CaseDelete(DeleteView):
+    model = Case
+    success_url = '/cases/'
+
+
 
 

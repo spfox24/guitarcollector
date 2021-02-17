@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>My Case List</h1>
+
+{% for case in cases %}
+<a href="{% url 'cases_detail' case.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ case.case }}</span>
+            <p>Brand: {{ case.brand }}</p>
+        </div>
+    </div>
+</a>
+
+{% endfor %}
+
+{% endblock %}
