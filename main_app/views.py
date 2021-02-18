@@ -37,7 +37,7 @@ def remove_case(request, guitar_id, case_id):
 
 class GuitarCreate(CreateView):
     model = Guitar
-    fields = '__all__'
+    fields = ['brand', 'model', 'serial', 'year', 'description']
 
 class GuitarUpdate(UpdateView):
     model = Guitar

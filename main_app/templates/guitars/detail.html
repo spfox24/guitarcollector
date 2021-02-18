@@ -62,8 +62,7 @@
             </div>
             <div class="card-action">
                 <form action="{% url 'remove_case' guitar.id case.id %}" method="POST">
-                    {% csrf_token %}
-                    
+                    {% csrf_token %}  
                     <button type="submit" class="red btn">Remove Case</button>
                 </form>
             </div>
