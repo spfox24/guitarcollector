@@ -60,6 +60,10 @@ class GuitarCreate(CreateView):
     model = Guitar
     fields = ['brand', 'model', 'serial', 'year', 'description']
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 class GuitarUpdate(UpdateView):
     model = Guitar
     fields = ['model', 'serial', 'year', 'description']
