@@ -1,7 +1,12 @@
+import uuid
+import boto3
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Guitar, Case
+from .models import Guitar, Case, Photo
 from .forms import PracticeForm
+
+S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/'
+BUCKET = 'fox-guitarcollector'
 
 def home(request):
     return render(request, 'home.html')
@@ -25,6 +30,22 @@ def add_practice(request, guitar_id):
         new_practice = form.save(commit=False)
         new_practice.guitar_id = guitar_id
         new_practice.save()
+    return redirect('guitars_detail', guitar_id=guitar_id)
+
+def add_photo(request, guitar_id):
+    photo_file = request.FILES.get('photo_file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        index_of_last_period = photo_file.name.rfind('.')
+        key = uuid.uuid4().hex[:6] + photo_file.name[index_of_last_period:]
+
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            photo = Photo(url=url, guitar_id=guitar_id)
+            photo.save()
+        except:
+            print('An error occured uploading file to AWS')
     return redirect('guitars_detail', guitar_id=guitar_id)
 
 def assoc_case(request, guitar_id, case_id):

@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from datetime import date
+from django.contrib.auth.models import User
 
 SESSIONS = (
     ('THEORY', 'Theory'),
@@ -36,6 +37,8 @@ class Guitar(models.Model):
 
     cases = models.ManyToManyField(Case)
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
         return self.model
     
@@ -68,7 +71,7 @@ class Practice(models.Model):
 
 class Photo(models.Model):
     url = models.CharField(max_length=200)
-    cat = models.ForeignKey(Guitar, on_delete=models.CASCADE)
+    guitar = models.ForeignKey(Guitar, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Photo for guitar_id: {self.guitar_id} @{self.url}"
