@@ -11,6 +11,7 @@ urlpatterns = [
     path('guitars/<int:pk>/delete/', views.GuitarDelete.as_view(), name='guitars_delete'),
     path('guitars/<int:guitar_id>/add_practice/', views.add_practice, name='add_practice'),
     path('guitars/<int:guitar_id>/add_photo/', views.add_photo, name='add_photo'),
+    path('guitars/<int:guitar_id>/remove_photo/', views.remove_photo, name='remove_photo'),
     path('guitars/<int:guitar_id>/assoc_case/<int:case_id>/', views.assoc_case, name='assoc_case'),
     path('guitars/<int:guitar_id>/remove_case/<int:case_id>/', views.remove_case, name='remove_case'),
     path('cases/', views.cases_index, name='cases_index'),
@@ -18,5 +19,5 @@ urlpatterns = [
     path('cases/create/', views.CaseCreate.as_view(), name='cases_create'),
     path('cases/<int:pk>/update/', views.CaseUpdate.as_view(), name='cases_update'),
     path('cases/<int:pk>/delete/', views.CaseDelete.as_view(), name='cases_delete'),
+    path('accounts/signup/', views.signup, name='signup'),
 ]
-

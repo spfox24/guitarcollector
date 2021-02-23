@@ -21,6 +21,15 @@
         </div>
         {% for photo in guitar.photo_set.all %}
         <img src="{{ photo.url }}" alt="{{ photo.url }}" class="responsive-img card-panel">
+
+        <div class="card-action">
+            <form action="" method="POST">
+                {% csrf_token %}  
+                <button type="submit" class="red btn">Delete Photo</button>
+            </form>
+        </div>
+        <br>
+
         {% empty %}
         <div class="card-panel red-text center-align">No Photos Uploaded</div>
         {% endfor %}
