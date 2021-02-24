@@ -72,11 +72,6 @@ def add_photo(request, guitar_id):
     return redirect('guitars_detail', guitar_id=guitar_id)
 
 @login_required
-def remove_photo(request, guitar_id, photo_id):
-    Guitar.objects.get(id=guitar_id).photo.remove(photo_id)
-    return redirect('guitars_detail', guitar_id=guitar_id)
-
-@login_required
 def assoc_case(request, guitar_id, case_id):
     Guitar.objects.get(id=guitar_id).cases.add(case_id)
     return redirect('guitars_detail', guitar_id=guitar_id)
